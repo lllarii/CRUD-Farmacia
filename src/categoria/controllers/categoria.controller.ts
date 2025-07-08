@@ -48,7 +48,7 @@ export class CategoriaController {
     return this.categoriaService.update(categoria);
   }
 
-  @Delete(':/id')
+  @Delete('/:id')
   @HttpCode(HttpStatus.NO_CONTENT) //code 204
   delete(@Param('id', ParseIntPipe) id: number) {
     return this.categoriaService.delete(id);
