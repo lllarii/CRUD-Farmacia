@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { INestApplication, ValidationPipe } from '@nestjs/common';
@@ -5,11 +6,9 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import * as request from 'supertest';
 import { AppModule } from '../src/app.module';
-import { Categoria } from '../src/categoria/entities/categoria.entity';
-import { Produto } from '../src/produto/entities/produto.entity';
 
 let app: INestApplication;
-let categoriaID: number;
+let categoriaID: any;
 
 beforeAll(async () => {
   const moduleFixture: TestingModule = await Test.createTestingModule({
@@ -17,7 +16,7 @@ beforeAll(async () => {
       TypeOrmModule.forRoot({
         type: 'sqlite',
         database: ':memory:',
-        entities: [Categoria, Produto],
+        entities: [__dirname + './../src/**/entities/*.entity.ts'],
         synchronize: true,
         dropSchema: true,
       }),
@@ -40,7 +39,7 @@ describe('Teste do Módulo Categoria (e2e)', () => {
     const resposta = await request(app.getHttpServer())
       .post('/categorias')
       .send({
-        descricao: 'categoria x',
+        categoria: 'categoria x',
       })
       .expect(201);
 
@@ -52,7 +51,7 @@ describe('Teste do Módulo Categoria (e2e)', () => {
       .put('/categorias')
       .send({
         id: 40,
-        descricao: 'categoria y',
+        categoria: 'categoria y',
       })
       .expect(404);
   });
@@ -73,7 +72,7 @@ describe('Teste do Módulo Produto (e2e)', () => {
       .send({
         nome: 'produto a',
         descricao: 'descrição do produto',
-        preco: '20',
+        preco: 20,
         marca: 'marca do produto',
         categoria: categoriaID,
       })
