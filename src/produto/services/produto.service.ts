@@ -126,10 +126,8 @@ export class ProdutoService {
     return await this.produtoRepository.save(buscamarca); //atualizo o grupo
   }
 
-  async descontoCategoria(produto: Produto): Promise<Produto[]> {
-    const buscaCategoria = await this.CategoriaService.findById(
-      produto.categoria.id,
-    );
+  async descontoCategoria(categoria: number): Promise<Produto[]> {
+    const buscaCategoria = await this.CategoriaService.findById(categoria);
     let desconto: number;
 
     if (buscaCategoria.produto.length === 0) {
@@ -147,16 +145,16 @@ export class ProdutoService {
     return await this.produtoRepository.save(buscaCategoria.produto);
   }
 
-  async descontoCupom(produto: Produto): Promise<Produto> {
-    await this.findById(produto.id);
+  async descontoCupom(id: number): Promise<Produto> {
+    const produtoid = await this.findById(id);
     let desconto: number;
     // let cupom
 
     // eslint-disable-next-line prefer-const
-    desconto = produto.preco * 0.15;
-    produto.preco = produto.preco - desconto;
+    desconto = produtoid.preco * 0.15;
+    produtoid.preco = produtoid.preco - desconto;
 
-    return await this.produtoRepository.save(produto);
+    return await this.produtoRepository.save(produtoid);
   }
 
   async delete(id: number): Promise<DeleteResult> {

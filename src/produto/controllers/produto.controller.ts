@@ -29,13 +29,13 @@ export class ProdutoController {
     return this.produtoService.findById(id);
   }
 
-  @Get('/:nome')
+  @Get('nome/:nome')
   @HttpCode(HttpStatus.OK)
   findAllByNome(@Param('nome') nome: string): Promise<Produto[]> {
     return this.produtoService.findAllByNome(nome);
   }
 
-  @Get('/:descricao')
+  @Get('descricao/:descricao')
   @HttpCode(HttpStatus.OK)
   findAllByDescricao(
     @Param('descricao') descricao: string,
@@ -43,19 +43,19 @@ export class ProdutoController {
     return this.produtoService.findAllByDescricao(descricao);
   }
 
-  @Get('/:marca')
+  @Get('marca/:marca')
   @HttpCode(HttpStatus.OK)
   findAllByMarca(@Param('marca') marca: string): Promise<Produto[]> {
     return this.produtoService.findAllByMarca(marca);
   }
 
-  @Get()
+  @Get('ordem/maior') //rota de teste insomnia
   @HttpCode(HttpStatus.OK)
   orderByMaiorPreco(): Promise<Produto[]> {
     return this.produtoService.orderByMaiorPreco();
   }
 
-  @Get()
+  @Get('ordem/menor') //rota de teste insomnia
   @HttpCode(HttpStatus.OK)
   orderByMenorPreco(): Promise<Produto[]> {
     return this.produtoService.orderByMenorPreco();
@@ -79,16 +79,16 @@ export class ProdutoController {
     return this.produtoService.descontoMarca(marca);
   }
 
-  @Put()
+  @Put('/categoria/:categoria') //rota de teste insomnia
   @HttpCode(HttpStatus.OK)
-  descontoCategoria(@Body() produto: Produto): Promise<Produto[]> {
-    return this.produtoService.descontoCategoria(produto);
+  descontoCategoria(@Param('categoria') categoria: number): Promise<Produto[]> {
+    return this.produtoService.descontoCategoria(categoria);
   }
 
-  @Put()
+  @Put('/cupom/:id')
   @HttpCode(HttpStatus.OK)
-  descontoCupom(@Body() produto: Produto): Promise<Produto> {
-    return this.produtoService.descontoCupom(produto);
+  descontoCupom(@Param('id') id: number): Promise<Produto> {
+    return this.produtoService.descontoCupom(id);
   }
 
   @Delete('/:id')
