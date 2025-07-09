@@ -126,31 +126,25 @@ export class ProdutoService {
     return await this.produtoRepository.save(buscamarca); //atualizo o grupo
   }
 
-  async descontoCategoria(): Promise<Produto[]> {
-    const buscaCategoria = await this.CategoriaService.findAll();
+  async descontoCategoria(produto: Produto): Promise<Produto[]> {
+    const buscaCategoria = await this.CategoriaService.findById(
+      produto.categoria.id,
+    );
     let desconto: number;
 
-    if (buscaCategoria.length === 0) {
+    if (buscaCategoria.produto.length === 0) {
       throw new HttpException(
         'Não há produtos disponíveis para aplicar o desconto.',
         HttpStatus.NOT_FOUND,
       );
     }
 
-    const produtosCategoria: Produto[] = [];
-
-    for (const item of buscaCategoria) {
-      for (const produto of item.produto) {
-        produtosCategoria.push(produto);
-      }
+    for (const produto of buscaCategoria.produto) {
+      desconto = produto.preco * 0.1;
+      produto.preco = produto.preco - desconto;
     }
 
-    for (const i of produtosCategoria) {
-      desconto = i.preco * 0.1;
-      i.preco = i.preco - desconto;
-    }
-
-    return await this.produtoRepository.save(produtosCategoria);
+    return await this.produtoRepository.save(buscaCategoria.produto);
   }
 
   async descontoCupom(produto: Produto): Promise<Produto> {
