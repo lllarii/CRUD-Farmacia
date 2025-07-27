@@ -60,9 +60,5 @@ Este projeto é uma API backend para gerenciamento de produtos de uma farmácia,
 
 ## 🧪 Estratégia de Testes
 
-- Simulam requisições de modo unitário, com chamadas HTTP e interação com banco de dados "temporário", SQLite  
-- Testam os fluxos de cadastro, atualizações, exclusões e verificação de possíveis erros tanto para o módulo de categorias quanto de produtos  
-
----
-
-
+- Simulam requisições de modo unitário, com chamadas HTTP e interação com banco de dados "temporário", SQLite.  
+- Testam os fluxos de cadastro, atualizações, exclusões e verificação de possíveis erros tanto para o módulo de categorias quanto de produtos.  
